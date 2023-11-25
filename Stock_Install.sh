@@ -1,31 +1,31 @@
 #!/bin/bash
 
 cat << "EOF"
-	                                                                 
-	,---.     ,---.         ,---.          o     |              |    
-	`---.,---.|__. ,---.    |---|,---.,---..,---.|--- ,---.,---.|--- 
-	    |,---||    |---'    |   |`---.`---.|`---.|    ,---||   ||    
-	`---'`---^`    `---'    `   '`---'`---'``---'`---'`---^`   '`---'
-	                                                                 
++===============================================================================+
+|	,---.     ,---.         ,---.          o     |              |    	|
+|	`---.,---.|__. ,---.    |---|,---.,---..,---.|--- ,---.,---.|--- 	|
+|	    |,---||    |---'    |   |`---.`---.|`---.|    ,---||   ||    	|
+|	`---'`---^`    `---'    `   '`---'`---'``---'`---'`---^`   '`---'	|
++===============================================================================+
 EOF
-
+# Instruções sobre o script
 echo "Bem-vindo(a) ao assistente de instalação da Stocksafe"
 echo "Para executar nossa aplicação vamos verificar:"
 printf "+ Java;\n+ Docker;\n+ Conteiner com MySql 8.0;\n+ Aplicação monitora de recusrsos Stocksafe.\n\n"
 echo "Aperte qualquer tecla para continuar..."
 read
 
-echo "Atualizando sistema"
+# Atualizando do sistema
+echo "Atualizando sistema..."
 sudo apt-get update && sudo apt-get upgrade
-printf "\n\n"
+printf "\n"
 
-echo "+=| Verificando versão java |=+"
-sleep 2
+# Verificando versão Java, se não existe instale-o
+echo "Verificando versão java..."
+sleep 3
 
-java -version -s
+if java -version &>/dev/null; then
 
-if [ $? = 0 ]
-        then
                 printf "Java já foi instalado!\n\n"
         else
                 echo "Java necessário!"
@@ -38,7 +38,9 @@ if [ $? = 0 ]
                 then
 			printf "Instalando java..."
 			sleep 2
-                        sudo apt install openjdk-17-jre-headless -y -s
+                        sudo apt install openjdk-17-jre -y -s
 			printf "Java instalado!\n"
         fi
 fi
+
+# Verificando versão do Docker, se não existe instale-o
