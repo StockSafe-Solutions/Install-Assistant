@@ -95,6 +95,16 @@ echo "Verificando contêiner..."
 sleep 3
 sudo docker ps -a
 
+# Baixar o monitoramento java  (jar antigo)
+echo "Baixando arquivo JAR..."
+sleep 3
+
+jar_url="https://github.com/StockSafe-Solutions/CLI-Java/releases/download/v1.1.0/CLI-Teste-1.0-SNAPSHOT.jar"
+
+wget $jar_url
+
+printf "Arquivo JAR baixado com sucesso!\n\n"
+
 
 
 
