@@ -37,36 +37,39 @@ echo "Atualizando sistema..."
 sudo apt-get update -s && sudo apt-get upgrade -s
 sleep 3
 
-# Verificando versão Java, se não existe instale-o
+# Verificando versão Java
 echo "Verificando versão java..."
 sleep 3
 
 if java -version &>/dev/null; then
 
-                printf "Java já foi instalado!\n\n"
-        else
-                echo "Java necessário!"
-                printf "Deseja instalar o java 17? [s/n]\n"
-
-                read get
-
-        if [ \"$get\" == \"s\" ];
-
-                then
-			printf "Instalando java..."
-			sleep 2
-                        sudo apt install openjdk-17-jre -y -s
-			printf "Java instalado!\n"
-        fi
+	printf "Java 17 está instalado!\n\n"
+else
+        printf "Java 17 necessário!\n"
+	printf "Iniciando instalação...\n"
+	sleep 2
+        sudo apt install openjdk-17-jre -y -s
+	printf "Java instalado com sucesso!\n\n"
 fi
 
-# Verificando versão do Docker, se não existe instale-o
+
+# Verificando versão do Docker
 echo "Verificando Docker..."
 sleep 3
 
 if command -v docker &>/dev/null; then
-  echo "Docker está instalado"
+
+	printf "Docker está instalado!"
 else
-  echo "Docker não está instalado"
-  sudo apt install docker.io
+	printf "Docker necessário!\n"
+	printf "Iniciando instalação...\n"
+	sleep 2
+	sudo apt install docker.io -y -s
+	printf "Docker instalado com sucesso!\n\n"
 fi
+
+# Verificando contêiner
+echo "Verificando contêiner com MySql 8.0..."
+
+
+
