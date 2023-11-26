@@ -105,9 +105,10 @@ wget $jar_url
 
 printf "Arquivo JAR baixado com sucesso!\n\n"
 
+# Executar jar
+sleep 3
+
+java -jar CLI-Teste-1.0-SNAPSHOT.jar
 
 
-
-
-
-
+printf "Instalação concluída com sucesso!\n\n"
