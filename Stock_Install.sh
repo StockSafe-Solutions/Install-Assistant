@@ -46,10 +46,10 @@ sleep 3
 echo "Verificando versão java..."
 sleep 3
 
-if java -version &>/dev/null; then
+java_version=$(java -version | awk '{print $2}')
 
+if [ "$java_version" == "17" ]; then
 	printf "Java 17 está instalado!\n\n"
-	sleep 1
 else
         printf "Java 17 necessário!\n"
 	printf "Iniciando instalação...\n"
