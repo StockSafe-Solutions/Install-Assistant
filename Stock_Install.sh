@@ -1,24 +1,41 @@
 #!/bin/bash
 
 cat << "EOF"
+
 +===============================================================================+
 |	,---.     ,---.         ,---.          o     |              |    	|
 |	`---.,---.|__. ,---.    |---|,---.,---..,---.|--- ,---.,---.|--- 	|
 |	    |,---||    |---'    |   |`---.`---.|`---.|    ,---||   ||    	|
 |	`---'`---^`    `---'    `   '`---'`---'``---'`---'`---^`   '`---'	|
 +===============================================================================+
+
 EOF
 # Instruções sobre o script
-echo "Bem-vindo(a) ao assistente de instalação da Stocksafe"
-echo "Para executar nossa aplicação vamos verificar:"
-printf "+ Java;\n+ Docker;\n+ Conteiner com MySql 8.0;\n+ Aplicação monitora de recusrsos Stocksafe.\n\n"
-echo "Aperte qualquer tecla para continuar..."
+printf "Bem-vindo(a) ao assistente de instalação da Stocksafe\n"
+printf "Para executar nossa aplicação precisamos verificar:\n"
+printf "+ Java 17;\n+ Docker;\n+ Conteiner com MySql 8.0;\n+ Aplicação '.jar' monitora de recursos Stocksafe.\n\n"
+printf "Aperte qualquer tecla para continuar...\n"
 read
+
+printf "Ao executar esse instalador você deve concordar em aceitar \na instalação de todos os requisitos do sistema Stocksafe.\n"
+printf "Você está de acordo com isso? [s/n]\n"
+
+read get
+
+if [ \"$get\" == \"s\" ]; then
+
+	printf "Executando assistente...\n\n"
+	sleep 2
+else
+	printf "Saindo do programa...\n\n"
+	sleep 1
+	exit
+fi
 
 # Atualizando do sistema
 echo "Atualizando sistema..."
-sudo apt-get update && sudo apt-get upgrade
-printf "\n"
+sudo apt-get update -s && sudo apt-get upgrade -s
+sleep 3
 
 # Verificando versão Java, se não existe instale-o
 echo "Verificando versão java..."
@@ -44,3 +61,12 @@ if java -version &>/dev/null; then
 fi
 
 # Verificando versão do Docker, se não existe instale-o
+echo "Verificando Docker..."
+sleep 3
+
+if command -v docker &>/dev/null; then
+  echo "Docker está instalado"
+else
+  echo "Docker não está instalado"
+  sudo apt install docker.io
+fi
