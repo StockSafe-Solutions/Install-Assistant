@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ $EUID -ne 0 ]; then
+  echo "Requer privilégios de root. Tente sudo."
+  exit 1
+fi
+
 cat << "EOF"
 
 +===============================================================================+
@@ -34,7 +39,7 @@ fi
 
 # Atualizando do sistema
 echo "Atualizando sistema..."
-sudo apt-get update -s && sudo apt-get upgrade -s
+sudo apt-get update && sudo apt-get upgrade
 sleep 3
 
 # Verificando versão Java
@@ -44,12 +49,14 @@ sleep 3
 if java -version &>/dev/null; then
 
 	printf "Java 17 está instalado!\n\n"
+	sleep 1
 else
         printf "Java 17 necessário!\n"
 	printf "Iniciando instalação...\n"
 	sleep 2
         sudo apt install openjdk-17-jre -y -s
 	printf "Java instalado com sucesso!\n\n"
+	java -version
 fi
 
 
@@ -59,17 +66,38 @@ sleep 3
 
 if command -v docker &>/dev/null; then
 
-	printf "Docker está instalado!"
+	printf "Docker está instalado!\n\n"
+	sleep 1
 else
 	printf "Docker necessário!\n"
 	printf "Iniciando instalação...\n"
 	sleep 2
 	sudo apt install docker.io -y -s
 	printf "Docker instalado com sucesso!\n\n"
+	docker -version
 fi
 
-# Verificando contêiner
-echo "Verificando contêiner com MySql 8.0..."
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+# Verificando imagens Docker
+echo "Verificando imagem docker com MySql 8.0..."
+sudo docker pull mysql:8.0
+printf "Imagens Docker nessa máquina:"
+sudo docker images
+
+# Iniciando contêiner MySql 8.0
+echo "Iniciando contêiner..."
+sleep 3
+sudo docker run -d -p 3306:3306 --name ContainerBD -e "MYSQL_DATABASE=StockSafe" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:8.0
+echo "Verificando contêiner..."
+sleep 3
+sudo docker ps -a
+
+
+
+
 
 
 
